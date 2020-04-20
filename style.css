@@ -1,0 +1,34 @@
+.container {
+  width: 25%;
+}
+
+.date {
+  color: #202520;
+  font-weight: bold;
+}
+
+.cases {
+  color: #474646;
+  font-weight: 500;
+}
+
+.count {
+  font-size: 1rem;
+  color: #696868;
+}
+
+tr {
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .container {
+    width: 90%;
+  }
+}
