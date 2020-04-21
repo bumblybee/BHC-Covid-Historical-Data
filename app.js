@@ -13,44 +13,44 @@ let output = `<table class="table table-striped table-bordered table-hover table
   </thead>
   <tbody>`;
 
+// Get today's date to compare to keys
+const date = new Date();
+const month = String(date.getMonth() + 1);
+const day = String(date.getDate());
+const year = String(date.getFullYear()).substr(-2);
+const today = `${month}/${day}/${year}`;
+
 corona.getData().then((data) => {
   data.forEach((result) => {
     if (result.county === "black hawk") {
       const cases = result.timeline.cases;
       console.log(cases);
       Object.entries(cases).forEach(([key, value]) => {
-        output += `<tr>
+        //Don't get today's key from this API, mathdroid is updated sooner
+        if (key !== today) {
+          output += `<tr>
       <td class="date">${key}</td>
       <td class="cases">${value}</td>
       <td class="count">${value - totalCount}</td>
     </tr>`;
-        totalCount = value;
+          totalCount = value;
+        }
+      });
+    }
+  });
+});
 
-        // If today's data isn't available from other API, get from mathdroid API
-
-        const date = new Date();
-        const month = String(date.getMonth() + 1);
-        const day = String(date.getDate());
-        const year = String(date.getFullYear()).substr(-2);
-        const today = `${month}/${day}/${year}`;
-
-        if (key !== today) {
-          corona.getCounties().then((data) => {
-            data.forEach((result) => {
-              if (result.provinceState === "Iowa") {
-                if (result.admin2 === "Black Hawk") {
-                  console.log(result);
-                  output += `
+corona.getCounties().then((data) => {
+  data.forEach((result) => {
+    if (result.provinceState === "Iowa") {
+      if (result.admin2 === "Black Hawk") {
+        // console.log(result);
+        output += `
         <td class="date">${today}</td>
         <td class="cases">${result.confirmed}</td>
        <td class="count">${result.confirmed - totalCount}</td>`;
-                  totalCount = result.confirmed;
-                }
-              }
-            });
-          });
-        }
-      });
+        totalCount = result.confirmed;
+      }
     }
   });
   output += `</tbody>
