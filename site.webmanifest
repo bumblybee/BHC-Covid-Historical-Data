@@ -1,6 +1,7 @@
 {
   "name": "BHC Covid Data",
   "short_name": "BHC Covid",
+  "description": "COVID-19 historical cases for Black Hawk County, IA",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -14,7 +15,7 @@
     }
   ],
   "theme_color": "#f55",
-  "background_color": "#ffffff",
+  "background_color": "#fff",
   "display": "standalone",
   "start_url": "index.html"
 }
