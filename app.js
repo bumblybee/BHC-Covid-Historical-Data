@@ -29,6 +29,7 @@ corona.getData().then((data) => {
       Object.entries(cases).forEach(([key, value]) => {
         //Don't get today's key from this API, mathdroid is updated sooner
         if (key !== today) {
+          // console.log(`${key}`);
           output += `<tr>
       <td class="date">${key}</td>
       <td class="cases">${value}</td>
@@ -42,23 +43,25 @@ corona.getData().then((data) => {
 });
 
 // Get today's cases from mathdroid
-corona.getCounties().then((data) => {
-  data.forEach((result) => {
-    if (result.provinceState === "Iowa") {
-      if (result.admin2 === "Black Hawk") {
-        // console.log(result);
-        output += `
+setTimeout(() => {
+  corona.getCounties().then((data) => {
+    data.forEach((result) => {
+      if (result.provinceState === "Iowa") {
+        if (result.admin2 === "Black Hawk") {
+          // console.log(result);
+          output += `
         <td class="date">${today}</td>
         <td class="cases">${result.confirmed}</td>
        <td class="count">${result.confirmed - totalCount}</td>`;
-        totalCount = result.confirmed;
+          totalCount = result.confirmed;
+        }
       }
-    }
-  });
-  output += `</tbody>
+    });
+    output += `</tbody>
 </table>`;
-  results.innerHTML = output;
-});
+    results.innerHTML = output;
+  });
+}, 800);
 
 // Calling to separate API to get today's cases because it's updated sooner
 // corona.getCounties().then((data) => {
